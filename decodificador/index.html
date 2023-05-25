@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Criptografia</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    textarea {
+      width: 300px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Boas vindas ao primeiro desafio!</h1>
+    <p>Durante estas duas semanas, vamos trabalhar em uma aplicação que criptografa textos, assim você poderá trocar mensagens secretas com outras pessoas que saibam o segredo da criptografia utilizada.</p>
+    <p>As "chaves" de criptografia que utilizaremos são:</p>
+    <ul>
+      <li>A letra "e" é convertida para "enter"</li>
+      <li>A letra "i" é convertida para "imes"</li>
+      <li>A letra "a" é convertida para "ai"</li>
+      <li>A letra "o" é convertida para "ober"</li>
+      <li>A letra "u" é convertida para "ufat"</li>
+    </ul>
+
+    <h2>Converter texto</h2>
+    <textarea id="input" placeholder="Digite o texto"></textarea>
+    <button onclick="encryptText()">Criptografar</button>
+    <button onclick="decryptText()">Descriptografar</button>
+    <p id="output"></p>
+  </div>
+
+  <script>
+    const encryptionMap = {
+      'e': 'enter',
+      'i': 'imes',
+      'a': 'ai',
+      'o': 'ober',
+      'u': 'ufat'
+    };
+
+    const decryptionMap = {
+      'enter': 'e',
+      'imes': 'i',
+      'ai': 'a',
+      'ober': 'o',
+      'ufat': 'u'
+    };
+
+    function encryptText() {
+      var inputText = document.getElementById("input").value;
+      var encryptedText = "";
+
+      for (var i = 0; i < inputText.length; i++) {
+        var char = inputText[i];
+        var encryptedChar = encryptionMap[char];
+
+        if (encryptedChar) {
+          encryptedText += encryptedChar;
+        } else {
+          encryptedText += char;
+        }
+      }
+
+      document.getElementById("output").textContent = encryptedText;
+    }
+
+    function decryptText() {
+      var inputText = document.getElementById("input").value;
+      var decryptedText = "";
+
+      var index = 0;
+      while (index < inputText.length) {
+        var found = false;
+        for (var key in decryptionMap) {
+          var decryptedChar = decryptionMap[key];
+          if (inputText.startsWith(key, index)) {
+            decryptedText += decryptedChar;
+            index += key.length;
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          decryptedText += inputText[index];
+          index++;
+        }
+      }
+
+      document.getElementById("output").textContent = decryptedText;
+    }
+  </script>
+</body>
+</html>
